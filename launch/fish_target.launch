@@ -1,0 +1,27 @@
+<launch>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+  </node>
+  <node name="image_view_raw" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <node name="fish_image_node" pkg = "fish_target" type = "fish_image_node.py" respawn = "true" output = "screen">
+  </node>
+
+  <node name="fish_target_node" pkg = "fish_target" type = "target_arduino_node.py" respawn = "false" output = "screen">
+  <param name="port" value="/dev/ttyACM0"/>
+  <param name="baud" value="115200" />
+  </node>
+
+  <node name="image_view_overlay" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/fishtarget/overlay_image"/>
+    <param name="autosize" value="true" />
+  </node>
+</launch>

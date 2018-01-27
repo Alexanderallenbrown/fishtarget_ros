@@ -1,0 +1,9 @@
+std_msgs/Header header
+float32 arduino_time
+float32 sensorval_raw
+float32 sensorval_filtered
+float32 num_shots
+float32 trial_num
+float32 target_position
+float32 target_in
+float32 target_out
