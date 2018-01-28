@@ -43,9 +43,9 @@ class target_image_overlay:
     self.target_sub = rospy.Subscriber("/fishtarget/targetinfo",TargetMsg,self.targetcallback,queue_size=1)
     self.image_pub = rospy.Publisher('/fishtarget/overlay_image',Image,queue_size=1)
     self.timenow = rospy.Time.now()
-    self.arduinotime = 0
+    self.arduino_time = 0
     self.sensorval_raw = 0
-    self.sensorfal_filtered = 0
+    self.sensorval_filtered = 0
     self.num_shots = 0
     self.trial_num = 0
     self.target_in = 0
@@ -54,9 +54,9 @@ class target_image_overlay:
 
 
   def targetcallback(self,data):
-    self.arduinotime = data.arduinotime
+    self.arduino_time = data.arduino_time
     self.sensorval_raw = data.sensorval_raw
-    self.sensorfal_filtered = data.sensorfal_filtered
+    self.sensorval_filtered = data.sensorval_filtered
     self.num_shots = data.num_shots
     self.trial_num = data.trial_num
     self.target_in = data.target_in
@@ -72,17 +72,18 @@ class target_image_overlay:
     self.timenow = rospy.Time.now()
     rows,cols,depth = frame.shape
 
-    cv2.putText(frame,'Time Since Last Trial: '+str(self.arduinotime)+' sec',(50,350),font,1,(0,0,255),2)
+    cv2.putText(frame,'Time Since Last Trial: '+str(self.arduino_time)+' sec',(50,350),font,1,(0,0,255),2)
     cv2.putText(frame,'Trial Number: '+str(self.trial_num),(50,380),font,1,(0,0,255),2)
     cv2.putText(frame,'Sensor Value: '+str(self.sensorval_raw)+' counts',(50,440),font,1,(0,0,255),2)
     cv2.putText(frame,'Detected Shots: '+str(self.num_shots),(50,410),font,1,(0,0,255),2)
-    cv2.putText(frame,'Sensor Median Diff: '+str(self.sensorfal_filtered),(50,470),font,1,(0,0,255),2)
+    cv2.putText(frame,'Sensor Median Diff: '+str(self.sensorval_filtered),(50,470),font,1,(0,0,255),2)
     #cv2.imshow('test',frame)
 
     img_out = self.bridge.cv2_to_imgmsg(frame, "bgr8")
     img_out.header.stamp = rospy.Time.now()
     try:
-        self.image_pub.publish(img_out)
+      if self.target_out==1:
+          self.image_pub.publish(img_out)
     except CvBridgeError as e:
         print(e)
 

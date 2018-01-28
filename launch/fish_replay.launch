@@ -1,0 +1,8 @@
+<launch>
+<param name="use_sim_time" value="true" />
+
+<node name="rqt_dashboard" pkg = "rqt_gui" type="rqt_gui" respawn = "false" output="screen">
+  <param name="perspective_file" value="~/catkin_ws/src/fish_target/rqt/fishtarget_default.perspective"/>
+</node>
+
+</launch>

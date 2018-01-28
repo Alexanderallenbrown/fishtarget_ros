@@ -7,10 +7,10 @@
     <param name="camera_frame_id" value="usb_cam" />
     <param name="io_method" value="mmap"/>
   </node>
-  <node name="image_view_raw" pkg="image_view" type="image_view" respawn="false" output="screen">
-    <remap from="image" to="/usb_cam/image_raw"/>
-    <param name="autosize" value="true" />
-  </node>
+  <!-- <node name="image_view_raw" pkg="image_view" type="image_view" respawn="false" output="screen"> -->
+    <!-- <remap from="image" to="/usb_cam/image_raw"/> -->
+    <!-- <param name="autosize" value="true" /> -->
+  <!-- </node> -->
 
   <node name="fish_image_node" pkg = "fish_target" type = "fish_image_node.py" respawn = "true" output = "screen">
   </node>
@@ -20,8 +20,13 @@
   <param name="baud" value="115200" />
   </node>
 
-  <node name="image_view_overlay" pkg="image_view" type="image_view" respawn="false" output="screen">
-    <remap from="image" to="/fishtarget/overlay_image"/>
-    <param name="autosize" value="true" />
-  </node>
+  <!-- <node name="image_view_overlay" pkg="image_view" type="image_view" respawn="false" output="screen"> -->
+    <!-- <remap from="image" to="/fishtarget/overlay_image"/> -->
+    <!-- <param name="autosize" value="true" /> -->
+  <!-- </node> --> 
+
+<node name="rqt_dashboard" pkg = "rqt_gui" type="rqt_gui" respawn = "false" output="screen">
+  <param name="perspective_file" value="~/catkin_ws/src/fish_target/rqt/fishtarget_default.perspective"/>
+</node>
+
 </launch>
