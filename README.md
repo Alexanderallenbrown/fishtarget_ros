@@ -9,6 +9,8 @@ To launch the fish target system, enter the following command into a terminal:
 
 You will see a window pop up that allows you to monitor the webcam view and the filtered sensor value.
 
+![screenshot](fishtarget_ros/RQT_screen.png)
+
 To record data from the system, use the "record" button in the lower left hand corner. You will want to save the "bag" file somewhere that you'll find it later, and make sure to record the topics "/fishtarget/targetinfo" and "/fishtarget/overlay_image" to your file.
 
 To end a session, pull up the terminal window and hit Control+C.
