@@ -3,11 +3,6 @@
 #Alex Brown
 #2013
 
-#currently, this node is in the process of being updated. Its purpose is to "measure" the lanes in a preview-sense. Currently, it does not use any map information, but eventually it will subscribe to the current "best" pose estimate, and use the map geometry to help estimate depth, etc. Right now the flat road assumption is key. There are a lot of commented debugging tools embedded here, that can be used if needed, but the idea now is to publish the lane marker feature (right lane at this writing) as a marker message, probably a line_strip or a points_list type. This way, you can see the relationship between the original image, the local locations of points perceived, and their global locations easily in RVIZ without messing around with costly CVwindows, etc. 
-
-#remember, for this to work, the ROS TFs representing the relationship between car and world (/world frame to /car frame) and car to camera have to be set up and published properly. When this is achieved, ROS does all of the coordinate transformations for us in RVIZ.
-
-
 import roslib
 roslib.load_manifest('fish_target')
 import sys
