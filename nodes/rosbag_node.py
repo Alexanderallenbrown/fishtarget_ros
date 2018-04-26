@@ -31,9 +31,11 @@ class RosbagRecord:
             if self.recording==False:
                 # Start recording.
                 print "starting record"
-                command = "source " + self.record_script
-                self.p = subprocess.Popen(command, stdin=subprocess.PIPE, shell=True, cwd=self.record_folder,
-                                          executable='/bin/bash')
+                # command = "source " + self.record_script
+                # print command
+                # self.p = subprocess.Popen(command, stdin=subprocess.PIPE, shell=True, cwd=self.record_folder,
+                #                           executable='/bin/bash')
+                self.p = subprocess.Popen("rosbag record /usb_cam/image_raw/compressed fishtarget/targetinfo", shell=True,cwd='/home/michael-brown/Desktop/NEW_FISH_BAGS')
                 self.recording=True
         else:
             if self.recording==True:
