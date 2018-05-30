@@ -32,7 +32,7 @@
 <node name="bag_recorder" pkg = "fish_target" type = "rosbag_node.py" respawn = "false" output="screen">
 <!-- <param name="record_script" value="rosbag record /usb_cam/image_raw/compressed fishtarget/targetinfo"/>
  -->
-<param name="record_script" value="rosbag record /usb_cam/image_raw/compressed fishtarget/targetinfo"/>
+<param name="record_script" value="rosbag record /fishtarget/overlay_image/compressed  fishtarget/targetinfo"/>
 
  <param name="record_folder" value="/home/michael-brown/Desktop/NEW_FISH_BAGS/"/>
 </node>

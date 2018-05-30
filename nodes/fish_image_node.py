@@ -10,7 +10,7 @@ import rospy
 from std_msgs.msg import *
 from geometry_msgs.msg import *
 from fish_target.msg import *
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 from numpy import pi
@@ -37,6 +37,7 @@ class target_image_overlay:
     self.image_sub = rospy.Subscriber("/usb_cam/image_raw",Image,self.imagecallback,queue_size=1)#change this to proper name!
     self.target_sub = rospy.Subscriber("/fishtarget/targetinfo",TargetMsg,self.targetcallback,queue_size=1)
     self.image_pub = rospy.Publisher('/fishtarget/overlay_image',Image,queue_size=1)
+    self.compressed_image_pub = rospy.Publisher('/fishtarget/overlay_image/compressed',CompressedImage,queue_size=1)
     self.timenow = rospy.Time.now()
     self.arduino_time = 0
     self.sensorval_raw = 0
@@ -74,11 +75,20 @@ class target_image_overlay:
     cv2.putText(frame,'Sensor Median Diff: '+str(self.sensorval_filtered),(50,470),font,1,(0,0,255),2)
     #cv2.imshow('test',frame)
 
+    #### Create CompressedIamge ####
+    cimg = CompressedImage()
+    cimg.header.stamp = rospy.Time.now()
+    cimg.format = "jpeg"
+    cimg.data = np.array(cv2.imencode('.jpeg', frame)[1]).tostring()
+
+
+
     img_out = self.bridge.cv2_to_imgmsg(frame, "bgr8")
     img_out.header.stamp = rospy.Time.now()
     try:
       if self.target_out==1:
           self.image_pub.publish(img_out)
+          self.compressed_image_pub.publish(cimg)
     except CvBridgeError as e:
         print(e)
 
